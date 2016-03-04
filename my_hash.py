@@ -1,7 +1,6 @@
 from __future__ import print_function
 import unittest
 
-
 '''A dictionary class implemented by hashing and chaining. The set is
 represented internally by a list of lists. The outer list is initialized to
 all None's.  When multiple values hash to the same location (a collision),
@@ -75,15 +74,22 @@ class my_hash_set:
             '''i made this so over complicated because i did not loop the recursive for with /
             with the if statement right'''
             if i[0] == key:
-
                 return True
         return False
+
+    def __ecco(self, key):
+
+        if key not in self:
+            raise (KeyError(key))
+        else:
+            '''thought it would be cool if it worked
+            and it did'''
+            pass
 
     def __getitem__(self, key):
         h = hash(key) % self.__limit
 
-        if key not in self:
-            raise (KeyError(key))
+        self.__ecco(key)
 
         for i in self.__items[h]:
             '''this is cool i didn't think to set the if with both the list and the key check'''
@@ -93,17 +99,16 @@ class my_hash_set:
     def __delitem__(self, key):
         h = hash(key) % self.__limit
 
-        if key not in self:
-            raise (KeyError(key))
+        self.__ecco(key)
 
         for i in self.__items[h]:
 
             if i and i[0] == key:
-
                 self.__count -= 1
 
                 self.__items[h] = None
                 return
+
 
 class test_my_hash_set(unittest.TestCase):
     def test_empty(self):
