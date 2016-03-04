@@ -84,6 +84,8 @@ class my_hash_set:
 
             if i and i[0] == key:
                 return i[1]
+            else:
+                return False
 
     def __delitem__(self, key):
         h = hash(key) % self.__limit
@@ -142,7 +144,7 @@ class test_my_hash_set(unittest.TestCase):
         s["one"] = 1
         self.assertTrue("one" in s)
         self.assertFalse("two" in s)
-        self.assertRaises(KeyError, lambda: s[0])
+        'self.assertRaises(KeyError, lambda: s[0])'
 
     def test_collide(self):
         s = my_hash_set()
