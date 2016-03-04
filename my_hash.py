@@ -67,11 +67,13 @@ class my_hash_set:
 
         for k in pre_rehash:
             self.__items[k[0]] = [k]
+            '''i liked this and it works so i kept it instead of your edits'''
         return
 
     def __contains__(self, key):
         for i in self.__flattened():
-
+            '''i made this so over complicated because i did not loop the recursive for with /
+            with the if statement right'''
             if i[0] == key:
 
                 return True
@@ -79,15 +81,14 @@ class my_hash_set:
 
     def __getitem__(self, key):
         h = hash(key) % self.__limit
+
         if key not in self:
             raise (KeyError(key))
 
         for i in self.__items[h]:
-
+            '''this is cool i didn't think to set the if with both the list and the key check'''
             if i and i[0] == key:
                 return i[1]
-            else:
-                return False
 
     def __delitem__(self, key):
         h = hash(key) % self.__limit
