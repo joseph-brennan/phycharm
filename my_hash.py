@@ -43,8 +43,8 @@ class my_hash_set:
 
     def __setitem__(self, key, value):
         if key in self:
-            return
             '''so this returns without doing anything when the value has already been entered'''
+            return
 
         h = hash(key) % self.__limit
 
