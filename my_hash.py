@@ -79,6 +79,8 @@ class my_hash_set:
 
     def __getitem__(self, key):
         h = hash(key) % self.__limit
+        if key not in self:
+            raise (KeyError(key))
 
         for i in self.__items[h]:
 
@@ -144,7 +146,7 @@ class test_my_hash_set(unittest.TestCase):
         s["one"] = 1
         self.assertTrue("one" in s)
         self.assertFalse("two" in s)
-        'self.assertRaises(KeyError, lambda: s[0])'
+        self.assertRaises(KeyError, lambda: s[0])
 
     def test_collide(self):
         s = my_hash_set()
