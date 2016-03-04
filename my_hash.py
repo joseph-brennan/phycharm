@@ -42,6 +42,10 @@ class my_hash_set:
         return str(self.__flattened())
 
     def __setitem__(self, key, value):
+        if key in self:
+            return
+            '''so this returns without doing anything when the value has already been entered'''
+
         h = hash(key) % self.__limit
 
         if not self.__items[h]:
@@ -66,16 +70,20 @@ class my_hash_set:
         return
 
     def __contains__(self, key):
-        h = hash(key) % self.__limit
+        for i in self.__flattened():
 
-        for i in self.__items:
+            if i[0] == key:
 
-            if i == self.__items[h]:
                 return True
         return False
 
     def __getitem__(self, key):
-        pass
+        h = hash(key) % self.__limit
+
+        for i in self.__items[h]:
+
+            if i and i[0] == key:
+                return i[1]
 
     def __delitem__(self, key):
         h = hash(key) % self.__limit
@@ -83,13 +91,14 @@ class my_hash_set:
         if key not in self:
             raise (KeyError(key))
 
-        self.__items[h].__delitem__(key)
+        for i in self.__items[h]:
 
-        if not self.__items[h]:
-            self.__items[h] = None
+            if i and i[0] == key:
 
-        self.__count -= 1
+                self.__count -= 1
 
+                self.__items[h] = None
+                return
 
 class test_my_hash_set(unittest.TestCase):
     def test_empty(self):
