@@ -114,10 +114,14 @@ class test_my_hash_set(unittest.TestCase):
     def test_empty(self):
         self.assertEqual(len(my_hash_set()), 0)
 
-    def test_add_one(self):
+    def test_len_one(self):
         s = my_hash_set()
         s[1] = "one"
         self.assertEquals(len(s), 1)
+
+    def test_add_one(self):
+        s = my_hash_set()
+        s[1] = "one"
         self.assertEquals(s[1], "one")
 
     def test_add_two(self):
@@ -125,8 +129,6 @@ class test_my_hash_set(unittest.TestCase):
         s[1] = "one"
         s[2] = "two"
         self.assertEquals(len(s), 2)
-        self.assertEquals(s[1], "one")
-        self.assertEquals(s[2], "two")
 
     def test_add_twice(self):
         s = my_hash_set()
