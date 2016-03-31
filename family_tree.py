@@ -157,8 +157,12 @@ class test_family_tree(unittest.TestCase):
         self.assertEquals(self.tree.generations(),
                           [['Grandpa'], ['Herb', 'Homer'], ['Bart', 'Lisa']])
 
-    """ Write your own tests for inorder etc. here """
+    """ Write your own tests for inorder etc. here
+    used from the discussion board"""
 
+    def test_inorder(self):
+        self.assertEquals((self.tree.inorder()), [(10, 'Herb'), (20, 'Grandpa'), \
+                                                  (25, 'Bart'), (30, 'Homer'), (35, 'Lisa')])
 
 if '__main__' == __name__:
     """ Read a file with lines of '# name'. Add each to a
