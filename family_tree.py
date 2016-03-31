@@ -161,7 +161,7 @@ class test_family_tree(unittest.TestCase):
     used from the discussion board"""
 
     def test_inorder(self):
-        self.assertEquals((self.tree.inorder()), [(10, 'Herb'), (20, 'Grandpa'), \
+        self.assertEquals((self.tree.inorder()), [(10, 'Herb'), (20, 'Grandpa'),
                                                   (25, 'Bart'), (30, 'Homer'), (35, 'Lisa')])
 
 if '__main__' == __name__:
