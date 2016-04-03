@@ -26,7 +26,7 @@ class family_tree:
             for node in self.__right:
                 yield (node)
 
-    """ Return a preorder list """
+    """ Return a pre_order list """
 
     def pre_order(self):
         results = []
@@ -37,29 +37,27 @@ class family_tree:
         results += [self]
 
         if self.__left:
-            results += self.pre_order(self.__left)
+            results += self.pre_order()
 
         if self.__right:
-            results += self.pre_order(self.__right)
-        pass
+            results += self.pre_order()
 
     """ Return a in_order list """
 
     def in_order(self):
-        value = self.__value
+
         results = []
 
-        if value is None:
-            return results
+        if self.__value is None:
+            return results[0]
 
         if self.__left:
-            results += self.in_order(value)
-
-        # results += [self]
+            results[0] += self.__left.in_order()
 
         if self.__right:
-            results += self.in_order(value)
+            results[0] += self.__right.in_order()
 
+        print(results)
     """ Return a post_order list """
 
     def post_order(self):
@@ -114,20 +112,11 @@ class family_tree:
     """ Given a value, return the name of that node's parent """
 
     def find_parent(self, value):
-        print(self.__value)
-        print(self.__name)
-        print(self.__left)
-        print(self.__parent)
-        print(value)
         if self.__value == value:
-
             return self.__name
 
-        if self.__parent > value:
+        if self.__value > value:
 
-            print(value)
-            print (self.__name)
-            print(self.__parent)
             if self.__left:
 
                 return self.__left.find_parent(value)
@@ -136,7 +125,7 @@ class family_tree:
 
                 raise LookupError
 
-        if self.__parent < value:
+        if self.__value < value:
 
             if self.__right:
 
@@ -211,7 +200,7 @@ class test_family_tree(unittest.TestCase):
         self.assertEquals(self.tree.generations(),
                           [['Grandpa'], ['Herb', 'Homer'], ['Bart', 'Lisa']])
 
-    """ Write your own tests for inorder etc. here
+    """ Write your own tests for in_order etc. here
     used from the discussion board"""
 
     def test_pre_order(self):
@@ -220,7 +209,7 @@ class test_family_tree(unittest.TestCase):
 
     def test_post_order(self):
         self.assertEqual((self.tree.post_order()),
-                         [(10, 'Herb'), (25, 'Bart'), (35, 'Lisa'), (30, 'Homer'),  (20, 'Grandpa')])
+                         [(10, 'Herb'), (25, 'Bart'), (35, 'Lisa'), (30, 'Homer'), (20, 'Grandpa')])
 
     def test_in_order(self):
         self.assertEquals((self.tree.in_order()), [(10, 'Herb'), (20, 'Grandpa'),
