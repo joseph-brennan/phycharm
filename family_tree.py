@@ -29,16 +29,23 @@ class family_tree:
     """ Return a pre_order list """
 
     def pre_order(self):
+
         results = []
 
         if self.__value is None:
             return results
 
+        results.append((self.__value, self.__name))
+
         if self.__left:
-            results[0] += self.pre_order()
+            results += self.__left.pre_order()
 
         if self.__right:
-            results[0] += self.pre_order()
+            results += self.__right.pre_order()
+
+        # you really should return the results you calculate
+
+        return results
 
     """ Return a in_order list """
 
@@ -50,18 +57,33 @@ class family_tree:
             return results
 
         if self.__left:
-            results[0] += self.__left
-            return self.in_order()
+            results += self.__left.in_order()
+
+        results.append((self.__value, self.__name))
 
         if self.__right:
-            results[0] += self.__right
-            return self.in_order()
+            results += self.__right.in_order()
 
-        print(results)
+        return results
+
     """ Return a post_order list """
 
     def post_order(self):
-        pass
+
+        results = []
+
+        if self.__value is None:
+            return results
+
+        if self.__left:
+            results += self.__left.post_order()
+
+        if self.__right:
+            results += self.__right.post_order()
+
+        results.append((self.__value, self.__name))
+
+        return results
 
     def __str__(self):
         return ','.join(str(node) for node in self)
@@ -112,41 +134,40 @@ class family_tree:
     """ Given a value, return the name of that node's parent """
 
     def find_parent(self, value):
-        if self.__value == value:
-            return self.__name
-
-        if self.__value > value:
-
-            if self.__left:
-
-                return self.__left.find_parent(value)
-
-            else:
-
-                raise LookupError
-
-        if self.__value < value:
-
-            if self.__right:
-
-                return self.__right.find_parent(value)
-
-            else:
-
-                raise LookupError
+        return self.__find(value).__parent.__name
 
     """ Given a value, return the name of that node's grand parent """
 
     def find_grand_parent(self, value):
-        pass
+        return self.__find(value).__parent.__parent.__name
 
     """ Create a list of lists, where each of the inner lists
         is a generation """
 
     def generations(self):
+
+        this_level = [self.__name]
+        next_level = []
+        results = []
+        names = []
+
+        while this_level:
+            names.append(self.__name)
+
+            if self.__left:
+                next_level.append(self.__name)
+
+            if self.__right:
+                next_level.append(self.__name)
+
+            if this_level is None:
+                results.append(names)
+                this_level = next_level
+                names = []
+
         """ First, create a list 'this_level' with the root,
-                and three empty lists: 'next_level', 'result', and
-                'names' """
+        and three empty lists: 'next_level', 'result', and
+        'names' """
 
         """ While 'this_level' has values """
         """ Get the first element and append its name to 'names' """
@@ -158,6 +179,7 @@ class family_tree:
         """ Append 'names' to 'result', set "this_level' to
             'next_level', and 'next_level' and 'names' to empty
              lists """
+        return results
 
 
 class test_family_tree(unittest.TestCase):
