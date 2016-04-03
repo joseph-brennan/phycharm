@@ -34,13 +34,11 @@ class family_tree:
         if self.__value is None:
             return results
 
-        results += [self]
-
         if self.__left:
-            results += self.pre_order()
+            results[0] += self.pre_order()
 
         if self.__right:
-            results += self.pre_order()
+            results[0] += self.pre_order()
 
     """ Return a in_order list """
 
@@ -49,13 +47,15 @@ class family_tree:
         results = []
 
         if self.__value is None:
-            return results[0]
+            return results
 
         if self.__left:
-            results[0] += self.__left.in_order()
+            results[0] += self.__left
+            return self.in_order()
 
         if self.__right:
-            results[0] += self.__right.in_order()
+            results[0] += self.__right
+            return self.in_order()
 
         print(results)
     """ Return a post_order list """
@@ -212,8 +212,8 @@ class test_family_tree(unittest.TestCase):
                          [(10, 'Herb'), (25, 'Bart'), (35, 'Lisa'), (30, 'Homer'), (20, 'Grandpa')])
 
     def test_in_order(self):
-        self.assertEquals((self.tree.in_order()), [(10, 'Herb'), (20, 'Grandpa'),
-                                                   (25, 'Bart'), (30, 'Homer'), (35, 'Lisa')])
+        self.assertEquals((self.tree.in_order()),
+                          [(10, 'Herb'), (20, 'Grandpa'), (25, 'Bart'), (30, 'Homer'), (35, 'Lisa')])
 
 
 if '__main__' == __name__:
