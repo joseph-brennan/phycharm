@@ -144,42 +144,47 @@ class family_tree:
     """ Create a list of lists, where each of the inner lists
         is a generation """
 
-    def generations(self):
+    '''def generations(self):
 
-        this_level = [self.__name]
+        this_level = [self]
         next_level = []
         results = []
         names = []
 
         while this_level:
-            names.append(self.__name)
-
             if self.__left:
-                next_level.append(self.__name)
+                next_level.append(self.__left.__name)
 
             if self.__right:
-                next_level.append(self.__name)
+                next_level.append(self.__right.__name)
 
-            if this_level is None:
-                results.append(names)
-                this_level = next_level
-                names = []
+            names.append(self.__name)
 
-        """ First, create a list 'this_level' with the root,
+            next_level.append(self.__name)
+
+            results.append(names)
+            this_level = next_level
+            names = []
+
+        return results'''
+    """ First, create a list 'this_level' with the root,
         and three empty lists: 'next_level', 'result', and
         'names' """
 
-        """ While 'this_level' has values """
-        """ Get the first element and append its name to 'names' """
+    """ While 'this_level' has values """
+    """ Get the first element and append its name to 'names' """
 
-        """ If the first element has a left, append it to 'next_level'
+    """ If the first element has a left, append it to 'next_level'
                 Do the same for the right """
 
-        """ If 'this_level' is now empty """
-        """ Append 'names' to 'result', set "this_level' to
+    """ If 'this_level' is now empty """
+    """ Append 'names' to 'result', set "this_level' to
             'next_level', and 'next_level' and 'names' to empty
-             lists """
-        return results
+             lists
+
+
+             cant get generations to work for me so i just comment it out
+             so the program could run the other tests"""
 
 
 class test_family_tree(unittest.TestCase):
