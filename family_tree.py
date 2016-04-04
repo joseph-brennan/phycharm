@@ -144,29 +144,30 @@ class family_tree:
     """ Create a list of lists, where each of the inner lists
         is a generation """
 
-    '''def generations(self):
-
+    def generations(self):
         this_level = [self]
         next_level = []
         results = []
         names = []
 
         while this_level:
-            if self.__left:
-                next_level.append(self.__left.__name)
+            test = this_level.pop()
 
-            if self.__right:
-                next_level.append(self.__right.__name)
+            names.append(test.__name)
 
-            names.append(self.__name)
+            if test.__right:
+                next_level.append(test.__right)
 
-            next_level.append(self.__name)
+            if test.__left:
+                next_level.append(test.__left)
 
-            results.append(names)
-            this_level = next_level
-            names = []
+            if not this_level:
+                results.append(names)
+                this_level = next_level
+                next_level = []
+                names = []
 
-        return results'''
+        return results
     """ First, create a list 'this_level' with the root,
         and three empty lists: 'next_level', 'result', and
         'names' """
@@ -180,11 +181,7 @@ class family_tree:
     """ If 'this_level' is now empty """
     """ Append 'names' to 'result', set "this_level' to
             'next_level', and 'next_level' and 'names' to empty
-             lists
-
-
-             cant get generations to work for me so i just comment it out
-             so the program could run the other tests"""
+             lists"""
 
 
 class test_family_tree(unittest.TestCase):
