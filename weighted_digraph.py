@@ -106,29 +106,51 @@ class weighted_digraph:
 
 
     def dijkstra(self, start):
+        for node in self.__nodes:
+            node.distance = float("inf")
+            node.previous = None
+
+        source = start
+        start.distance == 0
+        set todo = set()
+        todo.add(start)
+
+        while todo:
+            # find smallest node in to-do
+            min()
+            todo.remove(min())
+
+        for self.__edge in min.edge:
+            guess = min.distance + edge.to_node.weight
+
+            if guess < edge.to_node.distance:
+                edge.to_node.distance = guess
+                todo.add(edge.to_node)
+                edge.to_node.prev = min()
+
         """ For all the nodes in the graph, set distance
             equal to infinity and previous equal to none """
 
         ''' Set the source to the start, and start's distance
-            to zero '''
+            to zero
 
-        ''' Create a todo set and add source to it '''
+        Create a todo set and add source to it
 
-        ''' While there is something to do '''
-            ''' Find the node with the minimum distance '''
+        While there is something to do
+            Find the node with the minimum distance
 
-            ''' Remove it from the todo set '''
+            Remove it from the todo set
 
-            ''' For each of the edges in the minimum distance node '''
-                ''' Calculate a possible new distance to the adjacent
-                    node '''
+            For each of the edges in the minimum distance node
+                Calculate a possible new distance to the adjacent
+                    node
 
-                ''' If the new distance is less than the previous
-                    distance '''
-                    ''' Set the distance to the newly calculated
+                If the new distance is less than the previous
+                    distance
+                    Set the distance to the newly calculated
                         distance and set the previous reference to the
-                        node we just choose '''
-                    ''' Add the node to the todo set '''
+                        node we just choose
+                    Add the node to the todo set '''
 
 
 class test_weighted_digraph(unittest.TestCase):
