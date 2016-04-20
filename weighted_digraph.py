@@ -116,6 +116,7 @@ class weighted_digraph:
 
         set todo = set()
 
+
         todo.add(source)
 
         while todo:
