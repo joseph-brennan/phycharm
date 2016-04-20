@@ -124,13 +124,14 @@ class weighted_digraph:
             min()
             todo.remove(min())
 
-        for self.__edge in min.edge:
-            guess = min.distance + edge.to_node.weight
+            for self.__edge in min.edge:
+                guess = min.distance + edge.to_node.weight
 
-            if guess < edge.to_node.distance:
-                edge.to_node.distance = guess
-                todo.add(edge.to_node)
-                edge.to_node.prev = min()
+                if guess < edge.to_node.distance:
+                    edge.to_node.distance = guess
+                    todo.add(edge.to_node)
+                    edge.to_node.prev = min()
+        return todo
 
         """ For all the nodes in the graph, set distance
             equal to infinity and previous equal to none """
@@ -243,6 +244,19 @@ class test_weighted_digraph(unittest.TestCase):
 if '__main__' == __name__:
     g = weighted_digraph(False)
     for line in stdin:
+        a = line.strip().split(" ")
+        g.add_edge(a[0], a[1], int(a[2]))
+    result = g.dijkstra("Denver")
+    for city in result:
+        print(city[1], "is", city[0], 'miles from Denver')
+        if track_prev:
+            for path in city[2:]:
+                print("     ", path)
+
+if '__main__' == __name__:
+    g = weighted_digraph(False)
+    file = open(sys.argv[1], "r")
+    for line in file:
         a = line.strip().split(" ")
         g.add_edge(a[0], a[1], int(a[2]))
     result = g.dijkstra("Denver")
