@@ -6,15 +6,10 @@ index 713da91..0ad2109 100644
              node.distance = float("inf")
              node.previous = None
 
--        source = start
--
+
 +        source = find(start)
          start.distance == 0
 
--        set todo = set()
--
--
--        todo.add(source)
 +        set todo = set(source)
 
          while todo:
@@ -22,8 +17,7 @@ index 713da91..0ad2109 100644
              min()
              todo.remove(min())
 
--        for self.__edge in min.edge:
--            guess = min.distance + edge.to_node.weight
+
 +            # i recommend looking at the chapter 7 powerpoints
 +            # for how to find the minimum node
 +
@@ -31,10 +25,7 @@ index 713da91..0ad2109 100644
 +            for self.__edge in min.edge:
 +                guess = min.distance + edge.to_node.weight
 
--            if guess < edge.to_node.distance:
--                edge.to_node.distance = guess
--                todo.add(edge.to_node)
--                edge.to_node.prev = min()
+
 +                if guess < edge.to_node.distance:
 +                    edge.to_node.distance = guess
 +                    todo.add(edge.to_node)

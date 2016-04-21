@@ -104,58 +104,52 @@ class weighted_digraph:
     def are_adjacent(self, value1, value2):
         return self.find(value1).is_adjacent(self.find(value2))
 
-
     def dijkstra(self, start):
+        """ For all the nodes in the graph, set distance
+            equal to infinity and previous equal to none """
         for node in self.__nodes:
             node.distance = float("inf")
-            node.previous = None
+            node.prev = None
 
-        source = find(start)
+        ''' Set the source to the start, and start's distance
+            to zero'''
+        source = self.find(start)
 
-        start.distance == 0
+        start.distance = 0
+
+        '''Create a todo set and add source to it'''
+        todo = set(source)
 
         todo.add(source)
 
-        set todo = set(source)
+        ''' While there is something to do
+            Find the node with the minimum distance
 
-
+            Remove it from the todo set'''
         while todo:
+            for edge in self.__nodes:
+                
             # find smallest node in to-do
-            min()
+            min(edge)
             todo.remove(min())
 
+            ''' For each of the edges in the minimum distance node
+                Calculate a possible new distance to the adjacent
+                    node'''
             for self.__edge in min.edge:
                 guess = min.distance + edge.to_node.weight
 
-                if guess < edge.to_node.distance:
-                    edge.to_node.distance = guess
-                    todo.add(edge.to_node)
-                    edge.to_node.prev = min()
-        return todo
-
-        """ For all the nodes in the graph, set distance
-            equal to infinity and previous equal to none """
-
-        ''' Set the source to the start, and start's distance
-            to zero
-
-        Create a todo set and add source to it
-
-        While there is something to do
-            Find the node with the minimum distance
-
-            Remove it from the todo set
-
-            For each of the edges in the minimum distance node
-                Calculate a possible new distance to the adjacent
-                    node
-
-                If the new distance is less than the previous
+                '''If the new distance is less than the previous
                     distance
                     Set the distance to the newly calculated
                         distance and set the previous reference to the
                         node we just choose
                     Add the node to the todo set '''
+                if guess < edge.to_node.distance:
+                    edge.to_node.distance = guess
+                    todo.add(edge.to_node)
+                    edge.to_node.prev = min()
+        return todo
 
 
 class test_weighted_digraph(unittest.TestCase):
