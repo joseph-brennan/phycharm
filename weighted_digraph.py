@@ -110,14 +110,14 @@ class weighted_digraph:
             node.distance = float("inf")
             node.previous = None
 
-        source = start
+        source = find(start)
 
         start.distance == 0
 
-        set todo = set()
-
-
         todo.add(source)
+
+        set todo = set(source)
+
 
         while todo:
             # find smallest node in to-do
