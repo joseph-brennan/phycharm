@@ -115,7 +115,7 @@ class weighted_digraph:
             to zero'''
         source = self.find(start)
 
-        start.distance = 0
+        source.distance = 0
 
         '''Create a todo set and add source to it'''
         todo = set(source)
@@ -127,17 +127,20 @@ class weighted_digraph:
 
             Remove it from the todo set'''
         while todo:
-            for edge in self.__nodes:
-                
+            for node in self.__nodes:
+                if node.distance < min(node):
+                    min.node = node
+                else:
+                    node.prev = node
+
             # find smallest node in to-do
-            min(edge)
-            todo.remove(min())
+            todo.remove(node)
 
             ''' For each of the edges in the minimum distance node
                 Calculate a possible new distance to the adjacent
                     node'''
-            for self.__edge in min.edge:
-                guess = min.distance + edge.to_node.weight
+            for edge in self.edge:
+                guess = min.distance + node.to_node.weight
 
                 '''If the new distance is less than the previous
                     distance
@@ -149,7 +152,6 @@ class weighted_digraph:
                     edge.to_node.distance = guess
                     todo.add(edge.to_node)
                     edge.to_node.prev = min()
-        return todo
 
 
 class test_weighted_digraph(unittest.TestCase):
@@ -249,7 +251,7 @@ if '__main__' == __name__:
 
 if '__main__' == __name__:
     g = weighted_digraph(False)
-    file = open(sys.argv[1], "r")
+    file = open("C:\Users\Joey\Documents\Computer science 2\pyCharm\highways-1.txt", "r")
     for line in file:
         a = line.strip().split(" ")
         g.add_edge(a[0], a[1], int(a[2]))
