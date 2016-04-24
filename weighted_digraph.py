@@ -118,7 +118,7 @@ class weighted_digraph:
         source.distance = 0
 
         '''Create a todo set and add source to it'''
-        todo = set(source)
+        todo = set()
 
         todo.add(source)
 
@@ -127,20 +127,23 @@ class weighted_digraph:
 
             Remove it from the todo set'''
         while todo:
-            for node in self.__nodes:
-                if node.distance < min(node):
-                    min.node = node
-                else:
-                    node.prev = node
+
+            min_node = None
+            minimum = float("inf")
+
+            for node in todo:
+                if node.distance < minimum:
+                    min_node = node
+                    minimum = node.distance
 
             # find smallest node in to-do
-            todo.remove(node)
+            todo.remove(min_node)
 
             ''' For each of the edges in the minimum distance node
                 Calculate a possible new distance to the adjacent
                     node'''
-            for edge in self.edge:
-                guess = min.distance + node.to_node.weight
+            for edge in min_node.edges:
+                guess = minimum + edge.weight
 
                 '''If the new distance is less than the previous
                     distance
@@ -151,7 +154,31 @@ class weighted_digraph:
                 if guess < edge.to_node.distance:
                     edge.to_node.distance = guess
                     todo.add(edge.to_node)
-                    edge.to_node.prev = min()
+                    edge.to_node.prev = minimum
+        results = []
+        if not track_prev:
+            print (min_node, "min node")
+            print(node, "node")
+            print(todo, "todo")
+            print (edge, "edge")
+            print(node.distance, "node distance")
+            print (guess, "guess")
+            print(minimum, "minimum")
+
+            for min_node in self.__nodes:
+
+                results = [min_node.distance, min_node]
+
+            return results
+
+        else:
+            ''' For each node, create a list where the first element
+                is the total distance and the following values are the
+                nodes traversed from end to start '''
+            pass
+
+        return results
+
 
 
 class test_weighted_digraph(unittest.TestCase):
