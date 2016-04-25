@@ -3,8 +3,9 @@ from sys import stdin
 import unittest
 
 """worked with Amy for some of the program"""
+# thank you for the help as always
 # set to True if your result includes the track
-track_prev = False
+track_prev = True
 
 
 class weighted_digraph:
@@ -153,8 +154,8 @@ class weighted_digraph:
                         node we just choose
                     Add the node to the todo set '''
                 if guess < edge.to_node.distance:
-                    print("updating:", edge.to_node.value)
                     edge.to_node.distance = guess
+
                     todo.add(edge.to_node)
                     # thank you for that it helped a lot
                     edge.to_node.prev = min_node
@@ -170,19 +171,16 @@ class weighted_digraph:
         else:
             for node in self.__nodes:
                 first = [node.distance]
-                print("before:", first)
 
                 current = node
-                print(current.prev)
 
                 while current.prev:
                     first.append(current.value)
-                    print("during:", first)
+
                     current = current.prev
 
                 first.append(start)
                 results.append(first)
-                print(results)
 
         return results
 
@@ -270,7 +268,7 @@ class test_weighted_digraph(unittest.TestCase):
                                               [3, 4, 2, 1], [4, 5, 2, 1], [5, 6, 5, 2, 1]])
 
 
-if '__main__' == __name__:
+'''if '__main__' == __name__:
     g = weighted_digraph(False)
     for line in stdin:
         a = line.strip().split(" ")
@@ -280,7 +278,7 @@ if '__main__' == __name__:
         print(city[1], "is", city[0], 'miles from Denver')
         if track_prev:
             for path in city[2:]:
-                print("     ", path)
+                print("     ", path)'''
 
 if '__main__' == __name__:
     g = weighted_digraph(False)
