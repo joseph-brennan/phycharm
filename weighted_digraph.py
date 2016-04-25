@@ -155,31 +155,18 @@ class weighted_digraph:
                     edge.to_node.distance = guess
                     todo.add(edge.to_node)
                     edge.to_node.prev = minimum
+
         results = []
         if not track_prev:
-            print (min_node, "min node")
-            print(node, "node")
-            print(todo, "todo")
-            print (edge, "edge")
-            print(node.distance, "node distance")
-            print (guess, "guess")
-            print(minimum, "minimum")
-
-            for min_node in self.__nodes:
-
-                results = [min_node.distance, min_node]
-
-            return results
+            for node in self.__nodes:
+                results.append([node.distance, node.value])
 
         else:
             ''' For each node, create a list where the first element
                 is the total distance and the following values are the
                 nodes traversed from end to start '''
             pass
-
         return results
-
-
 
 class test_weighted_digraph(unittest.TestCase):
     def test_empty(self):
