@@ -2,6 +2,7 @@ from __future__ import print_function
 from sys import stdin
 import unittest
 
+"""worked with Amy for some of the program"""
 # set to True if your result includes the track
 track_prev = False
 
@@ -152,9 +153,14 @@ class weighted_digraph:
                         node we just choose
                     Add the node to the todo set '''
                 if guess < edge.to_node.distance:
+                    print("updating:", edge.to_node.value)
                     edge.to_node.distance = guess
                     todo.add(edge.to_node)
-                    edge.to_node.prev = minimum
+                    # thank you for that it helped a lot
+                    edge.to_node.prev = min_node
+
+        "totally missed that i continued the indentation keeping the below" \
+            "in the while to-do"
 
         results = []
         if not track_prev:
@@ -162,11 +168,24 @@ class weighted_digraph:
                 results.append([node.distance, node.value])
 
         else:
-            ''' For each node, create a list where the first element
-                is the total distance and the following values are the
-                nodes traversed from end to start '''
-            pass
+            for node in self.__nodes:
+                first = [node.distance]
+                print("before:", first)
+
+                current = node
+                print(current.prev)
+
+                while current.prev:
+                    first.append(current.value)
+                    print("during:", first)
+                    current = current.prev
+
+                first.append(start)
+                results.append(first)
+                print(results)
+
         return results
+
 
 class test_weighted_digraph(unittest.TestCase):
     def test_empty(self):
