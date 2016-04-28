@@ -6,77 +6,100 @@ track = False
     [(0, 1), (1, 3), (2, 0), (3, 2)] """
 
 
-def print_board(solution):
+class eight_queens:
+    def __init__(self, size):
+        self.size = size
+        self.placed = []
 
-    length = len(solution)
+    def print_board(self, solution):
 
-    print("for:", length)
+        length = len(solution)
 
-    print('-' * length)
+        print("for:", length)
 
-    if not solution:
+        print('-' * length)
 
-        print("no solution found")
-    else:
-        for i in range(length):
+        if not solution:
 
-            for j in range(length):
-
-                if (i, j) in solution:
-
-                    print("Q", end="")
-                else:
-
-                    print(".", end="")
-            print()
-
-    print('-' * length)
-
-
-''' Given the location of two queens, find if they are safe
-    from each other. '''
-
-
-def safe((x1, y1), (x2, y2)):
-    if x1 == x2:
-        return False
-
-    if y1 == y2:
-        return False
-
-    if abs(x2 - x1) == abs(y2 - y1):
-        return False
-
-    return True
-
-
-''' solve_queens(row)'''
-
-
-def solve_queen(row, columns):
-    solution = []
-    """if the row is greater than the size of the board, we're done"""
-    if row > len(solution):
-        return solution
-
-    """go through the columns in this row"""
-    for columns in row:
-        """go through all the already placed queens and see if
-            placing a new queen at (row, column) is safe"""
-
-        if safe(queen) is True:
-            solution.append(queen)
-
-            """if it is
-             place it at (row, column)"""
-
+            print("no solution found")
         else:
-            solve_queen(row + 1)
+            for i in range(length):
+
+                for j in range(length):
+
+                    if (i, j) in solution:
+
+                        print("Q", end="")
+                    else:
+
+                        print(".", end="")
+                print()
+
+        print('-' * length)
+
+    ''' Given the location of two queens, find if they are safe
+        from each other. '''
+
+    def safe(self, (x1, y1), (x2, y2)):
+        if x1 == x2:
+            return False
+
+        if y1 == y2:
+            return False
+
+        if abs(x2 - x1) == abs(y2 - y1):
+            return False
+
+        return True
+
+    ''' solve_queens(row)'''
+    # placed is a list a tuples where the queens already are
+
+    def solve_queen(self, row, placed):
+        current = placed
+        solution = []
+        pre_queen = (0, 0)
+
+        """if the row is greater than the size of the board, we're done"""
+        if row > self.size:
+            self.print_board(solution)
+            return
+
+        """go through the columns in this row"""
+        for column in range(self.size):
+            new_queen = (row, column)
+            """go through all the already placed queens and see if
+                placing a new queen at (row, column) is safe"""
+
+            if self.safe(new_queen, pre_queen) is True:
+                current.append(new_queen)
+                pre_queen = new_queen
+
+                """if it is
+                 place it at (row, column)"""
+
+            if not self.solve_queen(row + 1, current):
+                continue
 
             """if not solve_queens(row+1)
-                remove row and column"""
+                 remove row and column"""
+
+            for queen in current:
+                if self.safe(queen, new_queen) is True:
+                    current.append(new_queen)
+
+                    if not self.solve_queen(row + 1, current):
+                        placed.pop(new_queen)
+        solution = placed
 
 
 class test_eight_queens(unittest.TestCase):
-    def test_safe_empty(self):
-        self.assertEqual(safe((None, None), (None, None)), False)
+    def test_solve_queen(self):
+        g = eight_queens(4)
+        self.assertEqual(g.solve_queen(0, [(0, 1), (1, 3), (2, 0)]), [(0, 1), (1, 3), (2, 0), (3, 2)])
+
+    def test_print_board(self):
+        if track:
+            solution = [(0, 1), (1, 3), (2, 0), (3, 2)]
+            eight_queens(1).print_board(solution)
+
