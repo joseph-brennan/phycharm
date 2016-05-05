@@ -56,19 +56,15 @@ class eight_queens:
     # placed is a list a tuples where the queens already are
 
     def solve_queen(self, row, placed):
-        current = placed
-        pre_queen = (0, 0)
 
         if track:
             print(row, "row")
             print(placed, "placed")
-            print(pre_queen, "pre queen")
 
         """if the row is greater than the size of the board, we're done"""
-        if row > self.size:
-            self.solution = current
-            # self.print_board(self.solution)
-            return self.solution
+        if row == self.size:
+            self.print_board(placed)
+            return placed
 
         """go through the columns in this row"""
         for column in range(self.size):
@@ -76,31 +72,32 @@ class eight_queens:
             """go through all the already placed queens and see if
                 placing a new queen at (row, column) is safe"""
 
-            if self.safe(new_queen, pre_queen) is True:
-                current.append(new_queen)
-                pre_queen = new_queen
-                self.solve_queen(row + 1, current)
+            good = True
+
+            for queen in placed:
+                good &= self.safe(new_queen, queen)
+
+            if good:
+                placed.append(new_queen)
+
+                temp = self.solve_queen(row + 1, placed)
 
                 """if it is
                  place it at (row, column)"""
 
-            if not self.solve_queen(row + 1, current):
-                continue
+                if not temp:
+                    placed.remove(new_queen)
+                    continue
+
+                return temp
 
             """if not solve_queens(row+1)
                  remove row and column"""
 
-        for queen in current:
-            if self.safe(queen, new_queen) is True:
-                continue
-
-            else:
-                current.remove(queen)
-                self.solve_queen(row, current)
 
 
 class test_eight_queens(unittest.TestCase):
     def test_solve_queen(self):
         g = eight_queens(4)
-        self.assertEqual(g.solve_queen(0, [(0, 1), (1, 3), (2, 0)]), [(0, 1), (1, 3), (2, 0), (3, 2)])
-
+        # self.assertEqual(g.solve_queen(0, [(0, 1), (1, 3), (2, 0)]), [(0, 1), (1, 3), (2, 0), (3, 2)])
+        self.assertEqual(g.solve_queen(0, []), [(0, 1), (1, 3), (2, 0), (3, 2)])
