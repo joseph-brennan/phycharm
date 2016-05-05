@@ -1,7 +1,7 @@
 from __future__ import print_function
 import unittest
 
-track = False
+track = True
 """ This method assumes the solution is a list of tuples such as:
     [(0, 1), (1, 3), (2, 0), (3, 2)] """
 
@@ -9,7 +9,7 @@ track = False
 class eight_queens:
     def __init__(self, size):
         self.size = size
-        self.placed = []
+        self.solution = []
 
     def print_board(self, solution):
 
@@ -57,13 +57,18 @@ class eight_queens:
 
     def solve_queen(self, row, placed):
         current = placed
-        solution = []
         pre_queen = (0, 0)
+
+        if track:
+            print(row, "row")
+            print(placed, "placed")
+            print(pre_queen, "pre queen")
 
         """if the row is greater than the size of the board, we're done"""
         if row > self.size:
-            self.print_board(solution)
-            return
+            self.solution = current
+            # self.print_board(self.solution)
+            return self.solution
 
         """go through the columns in this row"""
         for column in range(self.size):
@@ -74,6 +79,7 @@ class eight_queens:
             if self.safe(new_queen, pre_queen) is True:
                 current.append(new_queen)
                 pre_queen = new_queen
+                self.solve_queen(row + 1, current)
 
                 """if it is
                  place it at (row, column)"""
@@ -84,22 +90,17 @@ class eight_queens:
             """if not solve_queens(row+1)
                  remove row and column"""
 
-            for queen in current:
-                if self.safe(queen, new_queen) is True:
-                    current.append(new_queen)
+        for queen in current:
+            if self.safe(queen, new_queen) is True:
+                continue
 
-                    if not self.solve_queen(row + 1, current):
-                        placed.pop(new_queen)
-        solution = placed
+            else:
+                current.remove(queen)
+                self.solve_queen(row, current)
 
 
 class test_eight_queens(unittest.TestCase):
     def test_solve_queen(self):
         g = eight_queens(4)
         self.assertEqual(g.solve_queen(0, [(0, 1), (1, 3), (2, 0)]), [(0, 1), (1, 3), (2, 0), (3, 2)])
-
-    def test_print_board(self):
-        if track:
-            solution = [(0, 1), (1, 3), (2, 0), (3, 2)]
-            eight_queens(1).print_board(solution)
 
