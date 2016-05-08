@@ -1,7 +1,7 @@
 from __future__ import print_function
 import unittest
 
-track = True
+track = False
 """ This method assumes the solution is a list of tuples such as:
     [(0, 1), (1, 3), (2, 0), (3, 2)] """
 
@@ -55,16 +55,35 @@ class eight_queens:
     ''' solve_queens(row)'''
     # placed is a list a tuples where the queens already are
 
-    def solve_queen(self, row, placed):
+    def solve_queen(self, row, placed,):
+        if self.size is None:
+
+            return None
 
         if track:
             print(row, "row")
             print(placed, "placed")
+            print(self.solution, "found solutions")
+            print(len(self.solution), "number of found solutions")
 
         """if the row is greater than the size of the board, we're done"""
-        if row == self.size:
-            self.print_board(placed)
-            return placed
+        if not track:
+
+            if row == self.size:
+                self.print_board(placed)
+                return placed
+
+        if track:
+            if row == self.size:
+                self.solution.append(placed)
+
+                for queens in self.solution:
+                    if queens == placed:
+                        return self.solve_queen(row + 1, placed)
+
+                    if not self.solve_queen(row + 1, placed):
+
+                        return len(self.solution)
 
         """go through the columns in this row"""
         for column in range(self.size):
@@ -95,9 +114,25 @@ class eight_queens:
                  remove row and column"""
 
 
-
 class test_eight_queens(unittest.TestCase):
-    def test_solve_queen(self):
+    def test_solve_queen_empty(self):
+        g = eight_queens(None)
+        self.assertEqual(g.solve_queen(0, []), None)
+
+    def test_solve_queen_four(self):
         g = eight_queens(4)
-        # self.assertEqual(g.solve_queen(0, [(0, 1), (1, 3), (2, 0)]), [(0, 1), (1, 3), (2, 0), (3, 2)])
-        self.assertEqual(g.solve_queen(0, []), [(0, 1), (1, 3), (2, 0), (3, 2)])
+        if not track:
+            self.assertEqual(g.solve_queen(0, []), [(0, 1), (1, 3), (2, 0), (3, 2)])
+
+        if track:
+            self.assertEqual(g.solve_queen(0, []), 2)
+
+    def test_solve_queen_eight(self):
+        g = eight_queens(8)
+        if not track:
+            self.assertEqual(g.solve_queen(0, []),
+                             [(0, 0), (1, 4), (2, 7), (3, 5), (4, 2), (5, 6), (6, 1), (7, 3)])
+
+if '__main__' == __name__:
+    g = eight_queens(input("input the size of the board "))
+    g.solve_queen(0, [])
