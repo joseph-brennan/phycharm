@@ -70,22 +70,19 @@ class eight_queens:
         if self.size is None:
             return None
 
-        if not track:
-            """if the row is greater than the size of the board, we're done for all possible solutions"""
-            if row == self.size:
-                self.solutions.append(placed[:])
-
         """if track:
             print(row, "row")
             print(placed, "placed")
             print(self.solutions, "found solutions")
             print(len(self.solutions), "number of found solutions")"""
 
-        if track:
-            """this solves for only the first solution and returns from here"""
-            if row == self.size:
-                self.solutions.append(placed[:])
-                return placed
+        """if the row is greater than the size of the board, we're done for all possible solutions"""
+        if row == self.size:
+            self.solutions.append(placed[:])
+            if track:
+                """this solves for only the first solution and returns from here"""
+                if row == self.size:
+                    return placed
 
         """go through the columns in this row"""
         for column in range(self.size):
