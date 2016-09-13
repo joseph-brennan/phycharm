@@ -81,8 +81,7 @@ class eight_queens:
             self.solutions.append(placed[:])
             if track:
                 """this solves for only the first solution and returns from here"""
-                if row == self.size:
-                    return placed
+                return placed
 
         """go through the columns in this row"""
         for column in range(self.size):
